@@ -1,18 +1,18 @@
-
+@MTSK-450
 Feature: Meetsky application login feature verification
 
-
+@MTSK-451
   Scenario: User can see valid placeholders on Username and Password input boxes
     Given User is on the login page
     Then  User sees the Username or email and Password as placeholders
-
+@MTSK-444
   Scenario: User can login with valid credentials
     Given User is on the login page
     When  User enters "Employee11" and "Employee123" as valid credentials
     When  User clicks on login button
     Then  User should be able to login and see the dashboard
 
-
+@MTSK-445
   Scenario Outline:User can not login with any invalid credentials
   - Credentials should contain at least 2, at most 15 characters.
   -"Wrong username or password." should be displayed for invalid credentials
@@ -28,7 +28,7 @@ Feature: Meetsky application login feature verification
       | Sati11     | 123456SA         |
       | S          | 12345678901234SA |
 
-
+@MTSK-446
   Scenario Outline:User can not login with any invalid credentials
   "Please fill out this field." message should be displayed if the password or username is empty
     Given User is on the login page
@@ -43,7 +43,7 @@ Feature: Meetsky application login feature verification
       | Employee11 |                  |
       |            | Employee123      |
 
-
+@MTSK-447
   Scenario Outline: User can see the password in a form of dots by default
     Given User is on the login page
     When  User enters "<password>" as password
@@ -54,7 +54,7 @@ Feature: Meetsky application login feature verification
       | Cydeo123     |
       | Student***   |
 
-
+@MTSK-448
   Scenario Outline: User can see the password explicitly if needed
     Given User is on the login page
     When  User enters "<password>" password
@@ -66,7 +66,7 @@ Feature: Meetsky application login feature verification
       | Cydeo123     |
       | Student***   |
 
-
+@MTSK-449
   Scenario: User can see the "Forgot password?" link on the login page and
             can see the "Reset Password" button on the next page after clicking on forget password link
     Given User is on the login page

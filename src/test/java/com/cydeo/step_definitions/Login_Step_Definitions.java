@@ -8,7 +8,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -81,22 +80,22 @@ public class Login_Step_Definitions {
     @When("User does not enter any {string} as password")
     public void userDoesNotEnterAnyAsPassword(String password) {
         loginPage.passwordInput.sendKeys(password);
-
     }
 
     @Then("User shouldn't be able to login and should see required field error message")
     public void user_shouldn_t_be_able_to_login_and_should_see_required_field_error_message() {
         loginPage.loginButton.click();
-        String actualRequiredFieldErrorMessage = "";
-        WebElement username = new WebDriverWait(Driver.getDriver(), 20)
-                .until(ExpectedConditions.elementToBeClickable(By.id("user")));
-        actualRequiredFieldErrorMessage = username.getAttribute("validationMessage");
+        String actualRequiredFieldErrorMessagePsw = loginPage.passwordInput.getAttribute("validationMessage");
+        String actualRequiredFieldErrorMessageUsr = loginPage.usernameInput.getAttribute("validationMessage");
 
-        WebElement password = new WebDriverWait(Driver.getDriver(), 20)
-                .until(ExpectedConditions.elementToBeClickable(By.id("password")));
-        actualRequiredFieldErrorMessage = password.getAttribute("validationMessage");
+        if (actualRequiredFieldErrorMessageUsr.isEmpty()) {
+            Assert.assertEquals(ConfigurationReader.getProperty("requiredFieldErrorMessage"), actualRequiredFieldErrorMessagePsw);
+            System.out.println("is empty : "+actualRequiredFieldErrorMessageUsr);
+            System.out.println("psw: "+ actualRequiredFieldErrorMessagePsw);
+        } else {
+            Assert.assertEquals(ConfigurationReader.getProperty("requiredFieldErrorMessage"), actualRequiredFieldErrorMessageUsr);
+        }
 
-        Assert.assertEquals(ConfigurationReader.getProperty("requiredFieldErrorMessage"), actualRequiredFieldErrorMessage);
     }
 
     @When("User enters {string} as password")
@@ -126,6 +125,7 @@ public class Login_Step_Definitions {
 
     @When("User clicks on Forgot password? link")
     public void userClicksOnForgotPasswordLink() {
+
         loginPage.forgotPassword.click();
     }
 
